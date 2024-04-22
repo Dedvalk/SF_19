@@ -1,0 +1,14 @@
+{% extends 'flatpages/default.html' %}
+
+{% block content %}
+<h1>Удаление отклика</h1>
+<hr>
+<form action="" method="POST">
+    {% csrf_token %}
+    <p>Вы действительно хотите отклонить(удалить) отклик пользователя "{{ object.user }}"?</p>
+    <input type="submit" value="Отклонить" />
+</form>
+<form action="/newsboard/index" method="get">
+      <input type="submit" value="Галя, у нас отмена" />
+</form>
+{% endblock content %}

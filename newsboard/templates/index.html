@@ -1,0 +1,40 @@
+{% extends 'flatpages/default.html' %}
+
+{% block content %}
+<h2>Страница пользователя {{request.user.username}}</h2>
+<br>
+<div>
+    <p>Зарегистрирован: {{request.user.date_joined | date:'d.m.y H:i:s'}}</p>
+    <p>Email: {{request.user.email}}</p>
+    <p>Дата последнего входа: {{request.user.last_login | date:'d.m.y H:i:s'}}</p>
+</div>
+<div>
+    <hr>
+    <h4>Отклики на объявления</h4>
+    <br>
+    {% if filterset.qs %}
+    <div >
+            {% for reply in filterset.qs%}
+            <ul>
+            <li >
+                <h5><a href="/newsboard/post/{{ reply.post.id  }}"  style="text-decoration:none;color: black">{{ reply.post  }}</a></h5>
+                <p>{{ reply.content }}</p>
+                <p>{{ reply.user }} | {{ reply.creation_date | date:'d.m.y H:i:s' }}</p>
+                <p><a href="/newsboard/reply/{{ reply.id  }}/accept">Принять</a> | <a href="/newsboard/reply/{{ reply.id  }}/delete">Отклонить</a></p>
+            </li>
+            </ul>
+            {% endfor %}
+    </div>
+    {% else %}
+            <p>Откликов нет</p>
+    {% endif %}
+    <hr>
+    <h4>Поиск откликов по объявлению</h4>
+    <br>
+    <form action="" method="get">
+        {{ filterset.form }}
+        <input type="submit" value="Найти">
+    </form>
+</div>
+
+{% endblock %}

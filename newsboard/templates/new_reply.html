@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новый отклик на ваше объявление!</title>
+</head>
+<body>
+    <h2>Добрый день, {{ author }}!</h2>
+    <p> Пользователь {{ user }} оставил отклик на ваше объявление "{{ post }}:"</p>
+    <p>"{{ content | truncatechars:50 }}"</p>
+    <p>Подробнее <a href="{{ url }}">здесь.</a></p>
+
+</body>
+</html>
+

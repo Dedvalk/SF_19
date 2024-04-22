@@ -1,0 +1,69 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_tags %}
+
+{% block title %}
+Posts
+{% endblock title %}
+
+{% block content %}
+
+<h1>Все объявления</h1>
+    <hr>
+        {% if posts %}
+
+
+                <table align="center" border="0">
+                <tr style="font-weight:bold">
+                    <td>Название</td>
+                    <td>Содержимое</td>
+                    <td>Дата добавления</td>
+                    <td>Автор</td>
+                    <td></td>
+                </tr>
+
+                {% for post in posts %}
+                <tr>
+                    <td><a href="/newsboard/post/{{ post.id  }}"  style="text-decoration:none;color: black">{{ post.title  }}</a></td>
+                    <td>{{ post.content | safe  }}</td>
+                    <td>{{ post.creation_date | date:'d.m.y H:i:s' }}</td>
+                    <td>{{ post.author }}</td>
+                    {% if post.author != request.user and request.user.is_authenticated%}
+                    <td><a href="/newsboard/post/{{ post.id  }}/reply"> откликнуться</a></td>
+                    {% endif %}
+                </tr>
+
+                {% endfor %}
+            </table>
+
+        <div >Всего: {{ posts | length }} </div>
+        {% else %}
+            <h5> Откликов нет!</h5>
+        {% endif %}
+    {% if page_obj.has_previous %}
+       <a href="?{% url_replace page=1 %}">1</a>
+       {% if page_obj.previous_page_number != 1 %}
+           ...
+           <a href="?{% url_replace page=page_obj.previous_page_number %}">{{ page_obj.previous_page_number }}</a>
+       {% endif %}
+   {% endif %}
+
+   {{ page_obj.number }}
+
+   {% if page_obj.has_next %}
+       <a href="?{% url_replace page=page_obj.next_page_number %}">{{ page_obj.next_page_number }}</a>
+       {% if paginator.num_pages != page_obj.next_page_number %}
+           ...
+           <a href="?{% url_replace page=page_obj.paginator.num_pages %}">{{ page_obj.paginator.num_pages }}</a>
+       {% endif %}
+   {% endif %}
+<hr>
+{% if request.user.is_authenticated %}
+    <form action="/newsboard/post/create" method="get">
+      <input type="submit" value="Создать объявление" />
+    </form>
+{% else %}
+    <p> Добавление объявлений доступно только <a href="/accounts/login">зарегистрированным</a> пользователям</p>
+{% endif %}
+
+
+{% endblock content %}

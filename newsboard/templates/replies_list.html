@@ -1,0 +1,39 @@
+
+{% block title %}
+
+{% endblock title %}
+
+{% block content %}
+
+
+<h3> Отклики на ваши объявления </h3>
+<br>
+        {% if replies %}
+            <table align="center">
+                <tr>
+                    <td>Объявление</td>
+                    <td>Отклик</td>
+                </tr>
+                {% for post_replies in replies %}
+
+                <tr>
+
+                    <td>{{ post_replies.first.post.title  }}</td>
+                    <td>
+                        {% for reply in post_replies %}
+                        <p>{{ reply.content }} |  <span color="red">{{ reply.user.username }} | {{ reply.creation_date | date:'d.m.y H:i:s' }}</span></p>
+                        {% endfor %}
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+
+            </table>
+        {% else %}
+        <p>У вас нет откликов:</p>
+        {% endif %}
+
+
+{% endblock content %}
