@@ -10,8 +10,8 @@ from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, DeleteView, UpdateView
 
-from .forms import PostForm, ReplyForm, RegisterForm
-from .models import Post, Reply, BaseRegisterForm, OneTimeCode
+from .forms import PostForm, ReplyForm
+from .models import Post, Reply, OneTimeCode
 from .filters import PostFilter
 
 
@@ -145,13 +145,6 @@ class ReplyAccept(DetailView):
         msg.attach_alternative(html_content, "text/html")
         msg.send()
         return context
-
-
-class BaseRegisterView(CreateView):
-
-    model = User
-    form_class = BaseRegisterForm
-    success_url = '/'
 
 
 class ConfirmRegistrationView(CreateView):

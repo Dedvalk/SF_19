@@ -19,7 +19,6 @@ JUST_ANOTHER_EMAIL = os.getenv('JUST_ANOTHER_EMAIL')
 
 class PostForm(forms.ModelForm):
 
-    #content = forms.CharField(min_length=20)
     content = forms.CharField(label='Содержание', widget=CKEditorUploadingWidget())
 
     class Meta:
@@ -30,21 +29,6 @@ class PostForm(forms.ModelForm):
            'content'
 
        ]
-       # widgets = {
-       #     'content': RichTextFormField(),
-       #}
-
-    # def clean(self):
-    #
-    #     cleaned_data = super().clean()
-    #     content = cleaned_data.get('content')
-    #     title = cleaned_data.get('title')
-    #     if title == content:
-    #         raise ValidationError({
-    #             'content': 'Содержимое поста не должно быть идентичным его названию.'
-    #         })
-    #
-    #     return cleaned_data
 
 
 class ReplyForm(forms.ModelForm):
@@ -61,14 +45,6 @@ class ReplyForm(forms.ModelForm):
         content = cleaned_data.get('content')
         return cleaned_data
 
-class RegisterForm(UserCreationForm):
-
-    class Meta:
-        model = User
-        fields = [
-            'email',
-            'username'
-        ]
 
 class CustomSignupForm(SignupForm):
 
